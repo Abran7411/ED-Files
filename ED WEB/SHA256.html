@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-256</title>
+    <script src="./assets/js/SHA256.js"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/css/SHA256.css" /> 
+  </head>
+  <body>
+    <div class="column is-8">
+      <div class="columns mb-0">
+        <div class="column">
+          <h1 id="mainTitle" class="title is-size-2">SHA256 Hash Generator</h1>
+        </div>
+        <div class="column" style="display: none;">
+          <button id="topMessage" type="button" class="button is-info is-fullwidth">Copied to Clipboard</button>
+        </div>
+        <div id="new-ss-div" class="column has-text-right is-hidden-mobile">
+          <button class="button" onclick="makeFav()" title="Add this tool to Favorites">
+            <span class="icon">
+              <svg class="svgicon">
+                <use id="favIcon" xlink:href="#heart-no-fill"></use>
+              </svg>
+            </span>
+            <span id="favText">Add to Fav</span>
+          </button>
+          <button id="new" type="button" class="button is-info" onclick="loadNewView()">New</button>
+          <button id="savenshare" type="button" class="button is-dark" onclick="openSaveModal()">Save &amp; Share</button>
+        </div>
+      </div>
+      <div class="columns" id="permalink" style="display:none">
+        <div class="column is-8">
+          <h2 class="subtitle" id="subtitle"></h2>
+        </div>
+        <div class="column is-4">
+          <h2 class="subtitle has-text-right">
+            <a id="urlLink" href="/"></a>
+          </h2>
+        </div>
+      </div>
+      <hr class="mt-0 mb-2 is-hidden-touch">
+      <div class="columns mb-0">
+        <div class="column is-6 is-hidden-touch pb-0">
+          <h3>Enter the plain or Cipher Text:</h3>
+        </div>
+        <div class="column is-6 pb-0">
+          <div class="textareatoolbar is-pulled-right">
+            <a class="icon" onclick="setFromLocalStorage()" title="Load previous data from Local Storage">
+              <i class="material-icons">history</i>
+            </a>
+            <a id="fileopen" class="icon" title="Open File">
+              <i class="material-icons">folder_open</i>
+            </a>
+            <a class="icon" title="Save online" onclick="openSaveModal(true)">
+              <i class="material-icons">save</i>
+            </a>
+            <a class="icon" title="Clear" onclick="cleanInputTextArea();">
+              <i class="material-icons">delete_outline</i>
+            </a>
+            <a id="inputcopy" class="icon" title="Copy to Clipboard">
+              <i class="material-icons">content_copy</i>
+            </a>
+          </div>
+          <a class="icon" style="margin-right:20px;float:right;color: #363636;" onclick="getPlainTextToGenerateHash();">
+            <i>Sample</i>
+          </a>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <textarea id="inputTextArea" class="textarea is-large is-primary" placeholder="Enter Text to Generate SHA256 Hash" autofocus=""></textarea>
+        </div>
+      </div>
+      <div class="columns is-hidden-touch">
+        <div class="column is-12 py-0">
+          <div id="inputFooterStatus" class="is-pulled-right">Size : <strong>45</strong> B, 45 Characters </div>
+        </div>
+      </div>
+      <div class="buttons is-centered">
+        <label class="checkbox mb-2 mr-2">
+          <input type="checkbox" id="isAuto" checked=""> Auto </label>
+        <button id="defaultAction" onclick="generateSHA256Hash();" class="button is-medium is-info mr-4">
+          <span class="icon">
+            <i class="material-icons">engineering</i>
+          </span>
+          <span>Generate</span>
+        </button>
+        <button class="button is-medium mr-4">
+          <input id="fileInput" class="file-input" type="file" onchange="handleFiles(this.files)">
+          <span class="icon">
+            <i class="material-icons">publish</i>
+          </span>
+          <span>File..</span>
+        </button>
+        <button class="button is-medium mr-4" onclick="openURLModal()">
+          <span class="icon">
+            <i class="material-icons">link</i>
+          </span>
+          <span>Load URL</span>
+        </button>
+      </div>
+      <div class="columns mb-0">
+        <div class="column is-6 is-hidden-touch pb-0">
+          <h3>Result of SHA256 Generated Hash:</h3>
+        </div>
+        <div class="column is-6 pb-0">
+          <div class="textareatoolbar is-pulled-right">
+            <a onclick="copyOutputTextArea();" class="icon" title="Copy to Clipboard">
+              <i class="material-icons">content_copy</i>
+            </a>
+          </div>
+          <a class="button is-white is-small" style="margin-right:20px;float:right;" onclick="lowercase()">Lower Case</a>
+          <a class="button is-white is-small" style="margin-right:20px;float:right;" onclick="uppercase()">Upper Case</a>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <textarea id="outputTextArea" class="textarea is-large is-info" placeholder="Generated SHA256 Hash"></textarea>
+        </div>
+      </div>
+      <div class="columns mb-0 is-hidden-touch">
+        <div class="column is-12 py-0">
+          <div id="outputFooterStatus" class="is-pulled-right">Size : <strong>64</strong> B, 64 Characters </div>
+        </div>
+      </div>
+      <div class="buttons is-centered mb-0">
+        <button id="outputcopy" class="button is-medium mr-4" onclick="copyOutputTextArea();">
+          <span class="icon">
+            <i class="material-icons">content_copy</i>
+          </span>
+          <span>Copy To Clipboard</span>
+        </button>
+        <button class="button is-medium mr-4" onclick="createFile('txt');">
+          <span class="icon">
+            <i class="material-icons">cloud_download</i>
+          </span>
+          <span>Download</span>
+        </button>
+      </div>
+    </div>
+    <style>
+        /* starts Material Icons CSS */
+        /* in case of update Compare with https://fonts.googleapis.com/icon?family=Material+Icons */
+        /* fallback */
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+            font-display: block;
+        }
+
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ends Material Icons CSS */
+    </style>
+  </body>
+</html>
