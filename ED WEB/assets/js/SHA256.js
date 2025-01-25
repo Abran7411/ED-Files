@@ -55,6 +55,7 @@ function FileLoader() {
                 console[_0x3e0a1f(0x1bd)]('was\x20rej');
             }, ![]);
         }
+console.log();
         );
         _0x4ff502[_0x300b76(0x1e0)](_0x52e0d1);
     }
